@@ -33,7 +33,7 @@ public class UserBehaviorController {
         }
 
         for(int i=0;i<trackingEvent.getQuantity();i++){
-            kafkaProducerService.sendEvent("product-interaction", trackingEvent.getProductId()+";"+trackingEvent.getWeight());
+            kafkaProducerService.sendEvent("product-interaction", trackingEvent);
         }
 
         return ResponseEntity.ok().build();
