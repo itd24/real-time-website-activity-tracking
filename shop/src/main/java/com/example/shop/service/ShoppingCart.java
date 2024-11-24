@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 import com.example.shop.model.Product;
 import com.example.shop.repository.Products;
 
+@Service
 public class ShoppingCart {
 
     private static final ShoppingCart instance = new ShoppingCart();
