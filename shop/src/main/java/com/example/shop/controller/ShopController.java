@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.shop.model.Product;
 import com.example.shop.repository.Products;
 import com.example.shop.service.ShoppingCart;
+import com.example.shop.service.KafkaConsumerService;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
@@ -18,6 +19,12 @@ import org.springframework.ui.Model;
 @Controller
 @RequestMapping("/")
 public class ShopController {
+
+    private final KafkaConsumerService kafkaConsumerService;
+
+    public ShopController(KafkaConsumerService kafkaConsumerService) {
+        this.kafkaConsumerService = kafkaConsumerService;
+    }
 
     @GetMapping("/list")
     public String showProductList(@RequestParam(value = "searchkeyword", required = false) String searchKeyword,
@@ -30,6 +37,7 @@ public class ShopController {
         model.addAttribute("products", products);
         model.addAttribute("searchKeyword", searchKeyword);
         model.addAttribute("cartAmount", ShoppingCart.getInstance().getCartAmount());
+        model.addAttribute("popularProducts", Products.getProductsByIds(kafkaConsumerService.getTopProducts(5, null)));
         return "product-list";
     }
 
@@ -39,6 +47,7 @@ public class ShopController {
         Product product = Products.getProductById(productId);
         model.addAttribute("product", product);
         model.addAttribute("cartAmount", ShoppingCart.getInstance().getCartAmount());
+        model.addAttribute("popularProducts", Products.getProductsByIds(kafkaConsumerService.getTopProducts(5,productId.toString())));
         return "product-detail";
     }
 
@@ -60,7 +69,7 @@ public class ShopController {
                 .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue())
                 .sum();
         model.addAttribute("totalPrice", totalPrice);
-
+        model.addAttribute("popularProducts", Products.getProductsByIds(kafkaConsumerService.getTopProducts(5, null)));
         model.addAttribute("cartAmount", ShoppingCart.getInstance().getCartAmount());
         return "shopping-cart";
     }
