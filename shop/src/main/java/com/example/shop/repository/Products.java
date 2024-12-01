@@ -2,6 +2,7 @@ package com.example.shop.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import com.example.shop.model.Product;
@@ -55,5 +56,13 @@ public class Products {
         return products.stream()
                 .filter(product -> product.getName().toLowerCase().contains(keyword.toLowerCase()))
                 .collect(Collectors.toList());
+    }
+
+    public static List<Product> getProductsByIds(List<Map.Entry<String, Integer>> popularProducts) {
+        List<Product> result = new ArrayList<Product>();
+        for (Map.Entry<String, Integer> productScore : popularProducts) {
+            result.add(getProductById(Integer.parseInt(productScore.getKey())));
+        }
+        return result;
     }
 }
