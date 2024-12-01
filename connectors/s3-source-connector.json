@@ -1,0 +1,22 @@
+{
+    "name": "s3-source-connector",
+    "config": {
+      "connector.class": "io.confluent.connect.s3.S3SourceConnector",
+      "tasks.max": "1",
+      "s3.bucket.name": "kafka-connect-data",
+      "s3.region": "eu-north-1",
+      "s3.key.format": "json", 
+      "s3.value.format": "json",                        
+      "s3.credentials.provider.class": "io.confluent.connect.s3.auth.AwsAccessKeyCredentialsProvider",
+      "aws.access.key.id": "<YourAccessKeyID>",
+      "aws.secret.access.key": "<YourSecretAccessKey>",
+      "topic": "past-product-interactions",             
+  
+      "key.converter": "org.apache.kafka.connect.storage.StringConverter", 
+      "key.converter.schemas.enable": "false",         
+  
+      "value.converter": "io.apicurio.registry.utils.converter.AvroConverter", 
+      "value.converter.apicurio.registry.url": "http://apicurio:8080/apis/ccompat/v7", 
+      "value.converter.schemas.enable": "true"          
+    }
+  }
