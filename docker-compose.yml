@@ -5,7 +5,7 @@ services:
   app:
     image: maven:3.8.3-openjdk-17
     container_name: webshop
-    volumes:
+    volumes: 
     - ./shop:/app
     working_dir: /app
     ports:
@@ -37,36 +37,6 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
 
 # ------------------------------------------------------------
-# KSQLDB Server
-# ------------------------------------------------------------
-  ksqldb-server:
-    image: confluentinc/cp-ksqldb-server:7.7.1
-    container_name: ksqldb-server
-    depends_on:
-      - kafka
-    ports:
-      - "8088:8088"
-    environment:
-      KSQL_CONFIG_DIR: "/etc/ksqldb"
-      KSQL_BOOTSTRAP_SERVERS: "kafka:9092"
-      KSQL_KSQL_LOGGING_PROCESSING_TOPIC_REPLICATION_FACTOR: 1
-      KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: "true"
-      KSQL_KSQL_SERVICE_ID: "ksql_service"
-      KSQL_KSQL_SCHEMA_REGISTRY_URL: http://apicurio-registry:8080/apis/ccompat/v7
-
-# ------------------------------------------------------------
-# KSQLDB CLI
-# ------------------------------------------------------------
-  ksqldb-cli:
-    image: confluentinc/cp-ksqldb-cli:7.7.1
-    container_name: ksqldb-cli
-    depends_on:
-      - ksqldb-server
-    entrypoint: /bin/sh
-    stdin_open: true
-    tty: true
-
-# ------------------------------------------------------------
 # Kafka Connect
 # ------------------------------------------------------------
   connect:
@@ -95,7 +65,7 @@ services:
 # ApiCurio Registry
 # ------------------------------------------------------------
   apicurio-registry:
-    image: apicurio/apicurio-registry
+    image: apicurio/apicurio-registry:3.0.6
     container_name: apicurio
     ports:
       - "8081:8080"
