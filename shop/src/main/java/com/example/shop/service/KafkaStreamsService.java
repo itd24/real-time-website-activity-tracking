@@ -51,12 +51,6 @@ public class KafkaStreamsService {
                 Materialized.with(Serdes.String(), Serdes.Integer())
             )
             .toStream()
-
-
-            .peek((key, aggregate) -> {
-                System.out.println("Aggregated value before toStream: key: "+key+", value: " + aggregate); // Log the aggregated Integer value
-            })
-
             .mapValues(aggregate -> {
                 return new ProductScore(aggregate);
             })
