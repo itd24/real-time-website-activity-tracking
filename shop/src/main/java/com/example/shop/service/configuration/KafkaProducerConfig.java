@@ -22,7 +22,7 @@ public class KafkaProducerConfig {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092");
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,JsonSchemaKafkaSerializer.class); // Using Apicurio's serializer
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSchemaKafkaSerializer.class); // Using Apicurio's serializer
         configProps.put(SerdeConfig.REGISTRY_URL, "http://apicurio-registry:8080"); // Apicurio Schema Registry URL
         return new DefaultKafkaProducerFactory<>(configProps);
     }

@@ -45,13 +45,13 @@ public class KafkaStreamAnalysisService {
             Consumed.with(Serdes.String(), pastProductInteractionSerde)
         );
 
-        // Windowed Aggregation: Compare product popularity over time periods
+        // Windowed aggregation: compare product popularity over time periods
         KTable<Windowed<String>, Long> interactionCounts = interactionStream
             .groupBy((key, value) -> value.getProductId(), Grouped.with(Serdes.String(), pastProductInteractionSerde))
             .windowedBy(TimeWindows.ofSizeWithNoGrace(Duration.ofDays(30))) // Tumbling window of 1 month
             .count(Materialized.with(Serdes.String(), Serdes.Long()));
 
-        // Print Results
+        // Print results
         interactionCounts.toStream().foreach((key, count) -> {
             System.out.printf("Product: %s, Count: %d, Start: %s, End: %s%n",
                 key.key(),
@@ -64,7 +64,7 @@ public class KafkaStreamAnalysisService {
         KafkaStreams streams = new KafkaStreams(builder.build(), streamsConfig);
         streams.start();
 
-        // Graceful Shutdown
+        // Graceful shutdown
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
     }
 

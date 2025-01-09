@@ -4,12 +4,12 @@
         let payload = { weight: null, productId: null, quantity: null };
 
         if (page.startsWith("/detail/")) {
-            // Extract productId from detail page URL
+             // Extract productId from the product detail page URL
             payload.productId = page.split("/detail/")[1];
             payload.weight = 1;
             payload.quantity = 1;
         } else if (page.startsWith("/shopping-cart")) {
-            // Extract query parameters from cart page URL
+            // Extract query parameters from the shopping cart page URL
             const urlParams = new URLSearchParams(page.split("?")[1]);
             payload.productId = urlParams.get("addProduct");
             payload.quantity = urlParams.has("quantity") ? parseInt(urlParams.get("quantity"), 10) : 1;
@@ -23,7 +23,7 @@
         if (!payload) return;
 
         fetch("/api/track", {
-            method: "post",
+            method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
         })
@@ -38,7 +38,7 @@
     // Extract current page and send tracking data
     const currentPage = window.location.pathname + window.location.search;
     const trackingData = extractTrackingData(currentPage);
-    if(trackingData.productId){
-        sendTrackingData(trackingData)
+    if (trackingData.productId) {
+        sendTrackingData(trackingData);
     }
 })();
