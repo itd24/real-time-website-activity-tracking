@@ -59,32 +59,32 @@
             </div>
         </div>
     </section>
-    <!-- Suggested items section-->
+    <!-- Popular items section-->
     <section class="py-5 bg-light">
         <div class="container px-4 px-lg-5 mt-5">
-            <h2 class="fw-bolder mb-4">Suggested for you</h2>
+            <h2 class="fw-bolder mb-4">Popular Products</h2>
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                <div class="col mb-5" th:each="suggestedProduct : ${suggestedproducts}">
+                <div class="col mb-5" th:each="popularProduct : ${popularProducts}">
                     <div class="card h-100">
                         <!-- Product image-->
-                        <img class="card-img-top" th:src="${suggestedProduct.image}" th:alt="${suggestedProduct.name}" />
+                        <div class="card-img-top product-image" th:style="'background-image: url(\'/assets/images/' + ${popularProduct.image} + '\')'"></div>
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->
-                                <h5 class="fw-bolder" th:text="${suggestedProduct.name}"></h5>
+                                <h5 class="fw-bolder" th:text="${popularProduct.name}"></h5>
                                 <!-- Product stars-->
-                                <div th:if="${suggestedProduct.showStars()}" class="d-flex justify-content-center small text-warning mb-2">
-                                    <i class="bi-star-fill" th:each="star : ${#numbers.sequence(1, suggestedProduct.stars)}"></i>
+                                <div th:if="${popularProduct.showStars()}" class="d-flex justify-content-center small text-warning mb-2">
+                                    <i class="bi-star-fill" th:each="star : ${#numbers.sequence(1, popularProduct.stars)}"></i>
                                 </div>
                                 <!-- Product price-->
-                                <span th:if="${suggestedProduct.isOnSale()}" class="text-muted text-decoration-line-through" th:text="${suggestedProduct.originalPrice}"></span>
-                                <span th:text="${suggestedProduct.price}"></span>
+                                <span th:if="${popularProduct.isOnSale()}" class="text-muted text-decoration-line-through" th:text="${popularProduct.originalPrice}"></span>
+                                <span th:text="${popularProduct.price}"></span>
                             </div>
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{/product/{id}(id=${suggestedProduct.id})}">View Product</a></div>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{/detail/{id}(id=${popularProduct.id})}">View Product</a></div>
                         </div>
                     </div>
                 </div>
