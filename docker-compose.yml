@@ -35,7 +35,7 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-
+      
 # ------------------------------------------------------------
 # Kafka Connect
 # ------------------------------------------------------------
@@ -56,6 +56,9 @@ services:
       CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
       CONNECT_PLUGIN_PATH: /usr/share/java,/etc/kafka-connect/plugins
       CONNECT_REST_ADVERTISED_HOST_NAME: connect
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
     ports:
       - "8083:8083"
     volumes:
