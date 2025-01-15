@@ -1,2 +1,2 @@
-# Real-time Rebsite Activity Tracking
-Real-time website activity tracking with Apache Kafka and ApiCurio schema registry
+# website-activity-tracking-kafka
+Real-time Website Activity Tracking with Apache Kafka
